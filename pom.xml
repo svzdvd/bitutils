@@ -1,0 +1,115 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>it.yobibit</groupId>
+  <artifactId>bitutils</artifactId>
+  <version>0.1-SNAPSHOT</version>
+  <name>BitUtils</name>
+  <url>https://github.com/svzdvd/bitutils/</url>
+  <inceptionYear>2013</inceptionYear>
+
+	<properties>
+	  <!--maven variable which points to your local repository -->
+	  <internal.repo.path>file:///home/davide/dev/mvn-repo/</internal.repo.path>
+	</properties>
+
+  <prerequisites>
+	<maven>2.2.1</maven>
+  </prerequisites>
+
+  <scm>
+    <url>git@github.com:svzdvd/bitutils.git</url>
+  </scm>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>            
+      <plugin>
+        <artifactId>maven-install-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>            
+      <plugin>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+      </plugin>            
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>
+      </plugin>            
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.6</version>
+      </plugin>            
+      <plugin>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.2</version>
+      </plugin>      
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.5</version>
+      </plugin>
+	  <plugin>
+		<artifactId>maven-surefire-plugin</artifactId>
+        <version>2.14</version>
+	  </plugin>
+    </plugins>
+  </build>
+
+  <developers>
+    <developer>
+      <id>svzdvd</id>
+      <name>Davide Savazzi</name>
+      <email>davide.savazzi [at] gmail.com</email>
+      <timezone>+1</timezone>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9</version>        
+            <configuration>
+            <groups>
+              <group>
+                <title>BitUtils</title>
+                <packages>it.yobibit.bitutils.*</packages>
+              </group>
+            </groups>
+            </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+	<distributionManagement>
+	  <repository>
+	    <id>internal.repo</id>
+	    <name>Internal Repository</name>
+	    <url>${internal.repo.path}</url>
+	  </repository>
+	</distributionManagement>
+
+</project>
