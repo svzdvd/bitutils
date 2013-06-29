@@ -23,10 +23,6 @@ public class BitWriter {
 	}
 	
 	
-	public boolean inRange(int value) {
-		return value >= 0 && value <= size.max;
-	}
-	
 	public void write(int value) throws IOException {
 		for (int i = 0; i < size.get(); i++) {
 			if (Bits.get(value, i) != 0) {

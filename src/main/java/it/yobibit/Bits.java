@@ -17,15 +17,31 @@ public class Bits {
 			this.max = ((int) Math.pow(2, size)) - 1;
 		}
 		
-		int get() {
+		public int get() {
 			return size;
 		}
 		
-		int max() {
+		public int max() {
 			return max;
 		}
 	}
+	
+	public static boolean inRange(int value, BitListSize size) {
+		return value >= 0 && value <= size.max;
+	}	
 
+	public static BitListSize getMinSize(int maxValue) {
+		if (Bits.inRange(maxValue, BitListSize.Size1)) {
+			return BitListSize.Size1;
+		} else if (Bits.inRange(maxValue, BitListSize.Size2)) {
+			return BitListSize.Size2;				
+		} else if (Bits.inRange(maxValue, BitListSize.Size4)) {
+			return BitListSize.Size4;
+		} else {
+			return null;
+		}
+	}
+	
 	public static int get(int bits, int pos) {
 		return bits & (1 << pos);
 	}	
