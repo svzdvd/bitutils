@@ -1,6 +1,6 @@
-package it.yobibit;
+package it.yobibit.bitutils;
 
-import it.yobibit.Bits.BitListSize;
+import it.yobibit.bitutils.Bits.BitListSize;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;

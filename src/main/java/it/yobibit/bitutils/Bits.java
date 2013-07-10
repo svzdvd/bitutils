@@ -1,4 +1,4 @@
-package it.yobibit;
+package it.yobibit.bitutils;
 
 
 public class Bits {

@@ -1,8 +1,10 @@
-package it.yobibit;
+package it.yobibit.bitutils;
 
-import it.yobibit.BitReader;
-import it.yobibit.BitWriter;
-import it.yobibit.Bits.BitListSize;
+import it.yobibit.bitutils.BitReader;
+import it.yobibit.bitutils.BufferBitReader;
+import it.yobibit.bitutils.RandomAccessBitReader;
+import it.yobibit.bitutils.BitWriter;
+import it.yobibit.bitutils.Bits.BitListSize;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,15 +33,19 @@ public class Bits2Test extends TestCase {
 		// file lenght should be 1 int = 4 bytes
 		Assert.assertEquals(4, file.length());
 		
-		BitReader reader = new BitReader(new RandomAccessFile(file, "r"), BitListSize.Size2);
+		read("RandomAccessBitReader", new RandomAccessBitReader(new RandomAccessFile(file, "r"), BitListSize.Size2), values2);
+		read("BufferBitReader", new BufferBitReader(new RandomAccessFile(file, "r"), BitListSize.Size2), values2);
+		
+		file.delete();
+	}
+
+	private void read(String readerType, BitReader reader, int[] values2) throws IOException {
 		try {
 			for (int i = 0; i < values2.length; i++) {
 				Assert.assertEquals("Wrong value in position: " + i, values2[i], reader.read());
 			}
 		} finally {
 			reader.close();
-		}
-		
-		file.delete();
+		}		
 	}
 }

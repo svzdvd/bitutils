@@ -1,6 +1,10 @@
-package it.yobibit;
+package it.yobibit.bitutils;
 
-import it.yobibit.Bits.BitListSize;
+import it.yobibit.bitutils.BitReader;
+import it.yobibit.bitutils.BufferBitReader;
+import it.yobibit.bitutils.RandomAccessBitReader;
+import it.yobibit.bitutils.BitWriter;
+import it.yobibit.bitutils.Bits.BitListSize;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +52,14 @@ public class RandomTest extends TestCase {
 			writer.close();
 		}
 		
-		BitReader reader = new BitReader(new RandomAccessFile(file, "r"), size);
+		read("RandomAccessBitReader", new RandomAccessBitReader(new RandomAccessFile(file, "r"), size), records);
+		read("BufferBitReader", new BufferBitReader(new RandomAccessFile(file, "r"), size), records);
+		
+		file.delete();
+	}
+
+	private void read(String readerType, BitReader reader, int[] records) throws IOException {
+		long start = System.currentTimeMillis();
 		try {
 			for (int i = 0; i < records.length; i++) {
 				Assert.assertEquals("Wrong value in position: " + i, records[i], reader.read());
@@ -65,8 +76,7 @@ public class RandomTest extends TestCase {
 			}
 		} finally {
 			reader.close();
-		}
-		
-		file.delete();
+		}	
+		System.out.println(readerType + ": " + (System.currentTimeMillis() - start));
 	}
 }
