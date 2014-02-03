@@ -38,6 +38,10 @@ public class BitWriter {
 		}
 	}	
 	
+	public void flush() throws IOException {
+		out.getChannel().force(false);
+	}
+	
 	public void close() throws IOException {
 		if (bufferPos != 0) {
 			out.writeInt(buffer);
