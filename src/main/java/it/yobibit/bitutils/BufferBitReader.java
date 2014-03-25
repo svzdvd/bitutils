@@ -8,23 +8,16 @@ import java.nio.IntBuffer;
 import java.nio.channels.FileChannel.MapMode;
 
 
-public class BufferBitReader implements BitReader {
+public class BufferBitReader extends AbstractBitReader {
 
 	private final RandomAccessFile file;
 	private final IntBuffer mappedFile;
-	private final int recordSize;
-	private final int recordsInBuffer;
-	private int buffer;
-	private int bufferPos;
-	private static final int BUFFER_SIZE = Integer.SIZE;
 	
 	
 	public BufferBitReader(RandomAccessFile file, BitListSize size) throws IOException {
+		super(size);
 		this.file = file;
-		this.mappedFile = file.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asIntBuffer();
-		this.recordSize = size.get();
-		this.recordsInBuffer = BUFFER_SIZE / recordSize; 
-		this.bufferPos = BUFFER_SIZE;
+		this.mappedFile = file.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asReadOnlyBuffer().asIntBuffer();
 	}
 	
 	

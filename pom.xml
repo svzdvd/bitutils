@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.yobibit</groupId>
   <artifactId>bitutils</artifactId>
-  <version>0.3-SNAPSHOT</version>
+  <version>0.4-SNAPSHOT</version>
   <name>BitUtils</name>
   <url>https://github.com/svzdvd/bitutils/</url>
   <inceptionYear>2013</inceptionYear>

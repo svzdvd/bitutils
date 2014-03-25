@@ -6,21 +6,14 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 
-public class RandomAccessBitReader implements BitReader {
+public class RandomAccessBitReader extends AbstractBitReader {
 
 	private final RandomAccessFile file;
-	private final int recordSize;
-	private final int recordsInBuffer;
-	private int buffer;
-	private int bufferPos;
-	private static final int BUFFER_SIZE = Integer.SIZE;
 	
 	
 	public RandomAccessBitReader(RandomAccessFile in, BitListSize size) throws IOException {
+		super(size);
 		this.file = in;
-		this.recordSize = size.get();
-		this.recordsInBuffer = BUFFER_SIZE / recordSize;
-		this.bufferPos = BUFFER_SIZE;
 	}
 	
 	

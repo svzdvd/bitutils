@@ -8,6 +8,8 @@ public interface BitReader {
 
 	int read() throws IOException;
 
+	int read(long recordOffset) throws IOException;
+	
 	void close() throws IOException;
 
 }
