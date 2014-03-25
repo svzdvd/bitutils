@@ -11,13 +11,13 @@ import java.nio.channels.FileChannel.MapMode;
 public class BufferBitReader extends AbstractBitReader {
 
 	private final RandomAccessFile file;
-	private final IntBuffer mappedFile;
+	protected final IntBuffer mappedFile;
 	
 	
 	public BufferBitReader(RandomAccessFile file, BitListSize size) throws IOException {
 		super(size);
 		this.file = file;
-		this.mappedFile = file.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asReadOnlyBuffer().asIntBuffer();
+		this.mappedFile = file.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asIntBuffer();
 	}
 	
 	
