@@ -2,13 +2,18 @@ package it.yobibit.bitutils;
 
 import it.yobibit.bitutils.Bits.BitListSize;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.nio.IntBuffer;
 
 public class Buffer1BitReader extends BufferBitReader {
 
-	public Buffer1BitReader(RandomAccessFile file) throws IOException {
+	public Buffer1BitReader(File file) throws IOException {
 		super(file, BitListSize.Size1);
+	}
+
+	public Buffer1BitReader(IntBuffer mappedFile) {
+		super(mappedFile, BitListSize.Size1);
 	}
 
 	

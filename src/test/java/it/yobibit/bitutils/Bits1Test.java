@@ -1,14 +1,11 @@
 package it.yobibit.bitutils;
 
-import it.yobibit.bitutils.BitReader;
-import it.yobibit.bitutils.BitWriter;
 import it.yobibit.bitutils.Bits.BitListSize;
-import it.yobibit.bitutils.BufferBitReader;
-import it.yobibit.bitutils.RandomAccessBitReader;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.BufferUnderflowException;
 
 import junit.framework.TestCase;
 
@@ -21,7 +18,7 @@ public class Bits1Test extends TestCase {
 		file.delete();
 		
 		boolean[] values1 = new boolean[] { true, true, false, true, false, false, false, true, false, true };
-		BitWriter writer = new BitWriter(new RandomAccessFile(file, "rw"), BitListSize.Size1);
+		BitWriter writer = new RandomAccessBitWriter(file, BitListSize.Size1);
 		try {
 			for (int i = 0; i < values1.length; i++) {
 				writer.write(values1[i] ? 1 : 0);
@@ -33,9 +30,185 @@ public class Bits1Test extends TestCase {
 		// file lenght should be 1 int = 4 bytes
 		Assert.assertEquals(4, file.length());
 		
-		read("RandomAccessBitReader", new RandomAccessBitReader(new RandomAccessFile(file, "r"), BitListSize.Size1), values1);
-		read("BufferBitReader", new BufferBitReader(new RandomAccessFile(file, "r"), BitListSize.Size1), values1);
+		read("RandomAccessBitReader", new RandomAccessBitReader(file, BitListSize.Size1), values1);
+		read("BufferBitReader", new BufferBitReader(file, BitListSize.Size1), values1);
 		
+		file.delete();
+	}
+
+	public void test4722954Buffer1BitWriter() throws IOException {
+		File file = new File("1bits.bin");
+		file.delete();
+		
+		RandomAccessFile raf = new RandomAccessFile(new File("bit1test.bin"), "r");
+		
+		Buffer1BitWriter writer = new Buffer1BitWriter(file, 4722954);
+		for (int i = 0; i < 4722954; i++) {
+			writer.write(raf.readBoolean() ? 1 : 0);
+		}
+		
+		raf.seek(0);
+		BitReader reader = writer.getReader();
+		for (int i = 0; i < 4722954; i++) {
+			try {
+				Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+			} catch (BufferUnderflowException e) {
+				e.printStackTrace();
+				Assert.fail("Failure at Record " + i + ": " + e.getMessage());
+			}
+		}
+		reader.close();		
+		
+		writer.close();
+		
+		raf.seek(0);
+		reader = new Buffer1BitReader(file);
+		for (int i = 0; i < 4722954; i++) {
+			try {
+				Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+			} catch (BufferUnderflowException e) {
+				e.printStackTrace();
+				Assert.fail("Failure at Record " + i + ": " + e.getMessage());
+			}
+		}
+		reader.close();
+				
+		raf.close();
+		file.delete();
+	}
+	
+	public void test4722954BufferBitWriter() throws IOException {
+		File file = new File("1bits.bin");
+		file.delete();
+		
+		RandomAccessFile raf = new RandomAccessFile(new File("bit1test.bin"), "r");
+		
+		BufferBitWriter writer = new BufferBitWriter(file, BitListSize.Size1, 4722954);
+		for (int i = 0; i < 4722954; i++) {
+			writer.write(raf.readBoolean() ? 1 : 0);
+		}
+
+		raf.seek(0);
+		BitReader reader = writer.getReader();
+		for (int i = 0; i < 4722954; i++) {
+			try {
+				Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+			} catch (BufferUnderflowException e) {
+				e.printStackTrace();
+				Assert.fail("Failure at Record " + i + ": " + e.getMessage());
+			}
+		}
+		reader.close();
+		
+		writer.close();
+
+		raf.seek(0);
+		reader = new BufferBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			try {
+				Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+			} catch (BufferUnderflowException e) {
+				e.printStackTrace();
+				Assert.fail("Failure at Record " + i + ": " + e.getMessage());
+			}
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new Buffer1BitReader(file);
+		for (int i = 0; i < 4722954; i++) {
+			try {
+				Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+			} catch (BufferUnderflowException e) {
+				e.printStackTrace();
+				Assert.fail("Failure at Record " + i + ": " + e.getMessage());
+			}
+		}
+		reader.close();
+				
+		raf.close();
+		file.delete();
+	}	
+	
+	public void test4722954RandomAccessWriter() throws IOException {
+		File file = new File("1bits.bin");
+		file.delete();
+		
+		RandomAccessFile raf = new RandomAccessFile(new File("bit1test.bin"), "r");
+		
+		BitWriter writer = new RandomAccessBitWriter(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			writer.write(raf.readBoolean() ? 1 : 0);
+		}
+		writer.close();
+		
+		raf.seek(0);
+		BitReader reader = new BufferBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new RandomAccessBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new Buffer1BitReader(file);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read() == 1);
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new BufferBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new RandomAccessBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new Buffer1BitReader(file);
+		for (int i = 0; i < 4722954; i++) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+		}
+		reader.close();
+
+		raf.seek(0);
+		reader = new RandomAccessBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i = i + 2) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+			raf.readBoolean();
+		}
+		reader.close();
+		
+		raf.seek(0);
+		reader = new BufferBitReader(file, BitListSize.Size1);
+		for (int i = 0; i < 4722954; i = i + 2) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+			raf.readBoolean();
+		}
+		reader.close();
+				
+		raf.seek(0);
+		reader = new Buffer1BitReader(file);
+		for (int i = 0; i < 4722954; i = i + 2) {
+			Assert.assertEquals("Failure at Record: " + i, raf.readBoolean(), reader.read(i) == 1);
+			raf.readBoolean();
+		}
+		reader.close();
+				
+		raf.close();
 		file.delete();
 	}
 	

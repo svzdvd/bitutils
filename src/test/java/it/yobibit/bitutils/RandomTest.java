@@ -1,14 +1,9 @@
 package it.yobibit.bitutils;
 
-import it.yobibit.bitutils.BitReader;
-import it.yobibit.bitutils.BufferBitReader;
-import it.yobibit.bitutils.RandomAccessBitReader;
-import it.yobibit.bitutils.BitWriter;
 import it.yobibit.bitutils.Bits.BitListSize;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Random;
 
 import junit.framework.TestCase;
@@ -43,7 +38,7 @@ public class RandomTest extends TestCase {
 			records[i] = random.nextInt(size.max() + 1);
 		}
 		
-		BitWriter writer = new BitWriter(new RandomAccessFile(file, "rw"), size);
+		BitWriter writer = new RandomAccessBitWriter(file, size);
 		try {
 			for (int i = 0; i < records.length; i++) {
 				writer.write(records[i]);
@@ -52,8 +47,8 @@ public class RandomTest extends TestCase {
 			writer.close();
 		}
 		
-		read("RandomAccessBitReader", new RandomAccessBitReader(new RandomAccessFile(file, "r"), size), records);
-		read("BufferBitReader", new BufferBitReader(new RandomAccessFile(file, "r"), size), records);
+		read("RandomAccessBitReader", new RandomAccessBitReader(file, size), records);
+		read("BufferBitReader", new BufferBitReader(file, size), records);
 		
 		file.delete();
 	}

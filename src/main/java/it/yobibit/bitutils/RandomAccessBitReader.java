@@ -2,18 +2,19 @@ package it.yobibit.bitutils;
 
 import it.yobibit.bitutils.Bits.BitListSize;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
 
 public class RandomAccessBitReader extends AbstractBitReader {
 
-	private final RandomAccessFile file;
+	private final RandomAccessFile raf;
 	
 	
-	public RandomAccessBitReader(RandomAccessFile in, BitListSize size) throws IOException {
+	public RandomAccessBitReader(File file, BitListSize size) throws IOException {
 		super(size);
-		this.file = in;
+		this.raf = new RandomAccessFile(file, "r");
 	}
 	
 	
@@ -21,15 +22,15 @@ public class RandomAccessBitReader extends AbstractBitReader {
 	public void seek(long recordOffset) throws IOException {
 		long intOffset = recordOffset / recordsInBuffer;
 		long byteOffset = 4 * intOffset;
-		file.seek(byteOffset);
-		buffer = file.readInt();
+		raf.seek(byteOffset);
+		buffer = raf.readInt();
 		bufferPos = recordSize * ((int) recordOffset % recordsInBuffer);
 	}
 	
 	@Override
 	public int read() throws IOException {
 		if (bufferPos == BUFFER_SIZE) {
-			buffer = file.readInt();
+			buffer = raf.readInt();
 			bufferPos = 0;
 		}
 		
@@ -45,6 +46,6 @@ public class RandomAccessBitReader extends AbstractBitReader {
 	
 	@Override
 	public void close() throws IOException {
-		file.close();
+		raf.close();
 	}
 }

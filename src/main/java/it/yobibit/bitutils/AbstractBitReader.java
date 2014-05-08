@@ -15,7 +15,7 @@ public abstract class AbstractBitReader implements BitReader {
 	protected static final int BUFFER_SIZE = Integer.SIZE;
 
 	
-	public AbstractBitReader(BitListSize size) throws IOException {
+	public AbstractBitReader(BitListSize size) {
 		this.recordSize = size.get();
 		this.recordsInBuffer = BUFFER_SIZE / recordSize;
 		this.bufferPos = BUFFER_SIZE;

@@ -1,51 +1,12 @@
 package it.yobibit.bitutils;
 
-import it.yobibit.bitutils.Bits.BitListSize;
-
+import java.io.Closeable;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
+public interface BitWriter extends Closeable {
 
-public class BitWriter {
-
-	private final RandomAccessFile out;
-	private final BitListSize size;
-	private int buffer;
-	private int bufferPos;
-	private static final int MAX_POS = 32;
+	void write(int value) throws IOException;
 	
+	void flush() throws IOException;
 	
-	public BitWriter(RandomAccessFile out, BitListSize size) {
-		this.out = out;
-		this.size = size;
-		this.buffer = 0;
-		this.bufferPos = 0;
-	}
-	
-	
-	public void write(int value) throws IOException {
-		for (int i = 0; i < size.get(); i++) {
-			if (Bits.get(value, i) != 0) {
-				buffer = Bits.set(buffer, bufferPos);
-			}
-			bufferPos++;
-		}
-		
-		if (bufferPos == MAX_POS) {
-			out.writeInt(buffer);
-			buffer = 0;
-			bufferPos = 0;
-		}
-	}	
-	
-	public void flush() throws IOException {
-		out.getChannel().force(false);
-	}
-	
-	public void close() throws IOException {
-		if (bufferPos != 0) {
-			out.writeInt(buffer);
-		}
-		out.close();
-	}
 }

@@ -2,6 +2,7 @@ package it.yobibit.bitutils;
 
 import it.yobibit.bitutils.Bits.BitListSize;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.IntBuffer;
@@ -10,14 +11,19 @@ import java.nio.channels.FileChannel.MapMode;
 
 public class BufferBitReader extends AbstractBitReader {
 
-	private final RandomAccessFile file;
+	private RandomAccessFile raf;
 	protected final IntBuffer mappedFile;
 	
 	
-	public BufferBitReader(RandomAccessFile file, BitListSize size) throws IOException {
+	public BufferBitReader(File file, BitListSize size) throws IOException {
 		super(size);
-		this.file = file;
-		this.mappedFile = file.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asIntBuffer();
+		this.raf = new RandomAccessFile(file, "r");
+		this.mappedFile = raf.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asIntBuffer();
+	}
+	
+	public BufferBitReader(IntBuffer mappedFile, BitListSize size) {
+		super(size);
+		this.mappedFile = mappedFile;
 	}
 	
 	
@@ -48,6 +54,8 @@ public class BufferBitReader extends AbstractBitReader {
 	
 	@Override
 	public void close() throws IOException {
-		file.close();
+		if (raf != null) {
+			raf.close();
+		}
 	}
 }
