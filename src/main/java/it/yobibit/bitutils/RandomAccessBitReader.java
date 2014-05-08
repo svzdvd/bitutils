@@ -17,6 +17,10 @@ public class RandomAccessBitReader extends AbstractBitReader {
 		this.raf = new RandomAccessFile(file, "r");
 	}
 	
+	@Override
+	public void reset() throws IOException {
+		raf.seek(0);
+	}
 	
 	@Override
 	public void seek(long recordOffset) throws IOException {

@@ -16,12 +16,24 @@ public abstract class AbstractBitReader implements BitReader {
 
 	
 	public AbstractBitReader(BitListSize size) {
-		this.recordSize = size.get();
-		this.recordsInBuffer = BUFFER_SIZE / recordSize;
-		this.bufferPos = BUFFER_SIZE;
+		recordSize = size.get();
+		recordsInBuffer = BUFFER_SIZE / recordSize;
+
+		// reset (but don't call reset(): it's overridden by subclasses)
+		bufferPos = BUFFER_SIZE;
+		previousValue = -1;
+		previousRecordOffset = -1;	
 	}
 
 	
+	@Override
+	public void reset() throws IOException {
+		bufferPos = BUFFER_SIZE;		
+		previousValue = -1;
+		previousRecordOffset = -1;	
+	}
+
+	@Override
 	public int read(long recordOffset) throws IOException {
 		if (previousRecordOffset == recordOffset) {
 			return previousValue;

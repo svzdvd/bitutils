@@ -11,4 +11,6 @@ public interface BitReader extends Closeable {
 
 	int read(long recordOffset) throws IOException;
 
+	void reset() throws IOException;
+	
 }

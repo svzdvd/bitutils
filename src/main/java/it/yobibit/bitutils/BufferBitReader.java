@@ -28,6 +28,11 @@ public class BufferBitReader extends AbstractBitReader {
 	
 	
 	@Override
+	public void reset() throws IOException {
+		mappedFile.position(0);
+	}
+	
+	@Override
 	public void seek(long recordOffset) throws IOException {
 		long intOffset = recordOffset / recordsInBuffer;
 		mappedFile.position((int) intOffset);

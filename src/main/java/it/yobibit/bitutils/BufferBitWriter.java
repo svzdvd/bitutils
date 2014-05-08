@@ -57,11 +57,10 @@ public class BufferBitWriter implements BitWriter {
 	
 	private static int getSizeInBytes(BitListSize recordSizeInBits, int recordCount) {
 		double sizeInBits = ((double) recordCount) * recordSizeInBits.get();
-		int sizeInBytes = (int) Math.floor(sizeInBits / 8);
-		if (sizeInBits % 8 > 0) {
-			// add another int = 4 bytes
-			sizeInBytes += 4;
-		}
+		
+		int sizeInInt = (int) Math.ceil(sizeInBits / Integer.SIZE);
+		int sizeInBytes = sizeInInt * (Integer.SIZE / Byte.SIZE);
+		
 		return sizeInBytes;
 	}
 	

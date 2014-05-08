@@ -15,6 +15,12 @@ public class Buffer1BitWriter extends BufferBitWriter {
 	
 	@Override
 	public BitReader getReader() {
+		if (bufferPos != 0) {
+			int pos = intBuffer.position();
+			intBuffer.put(buffer);
+			intBuffer.position(pos);
+		}
+		
 		IntBuffer readOnlyBuffer = intBuffer.asReadOnlyBuffer();
 		readOnlyBuffer.position(0);
 		return new Buffer1BitReader(readOnlyBuffer);
