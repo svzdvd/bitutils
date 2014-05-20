@@ -96,7 +96,10 @@ public class BufferBitWriter implements BitWriter {
 		if (bufferPos != 0) {
 			intBuffer.put(buffer);
 		}
+		
 		fileBuffer.force();
+		DirectBufferCleaner.cleanDirectBuffer(fileBuffer);
+		
 		raf.setLength(intBuffer.position() * 4);
 		raf.close();
 	}

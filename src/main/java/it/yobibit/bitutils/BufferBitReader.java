@@ -6,44 +6,47 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.IntBuffer;
+import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel.MapMode;
 
 
 public class BufferBitReader extends AbstractBitReader {
 
 	private RandomAccessFile raf;
-	protected final IntBuffer mappedFile;
+	private MappedByteBuffer fileBuffer;
+	protected final IntBuffer intBuffer;
 	
 	
 	public BufferBitReader(File file, BitListSize size) throws IOException {
 		super(size);
 		this.raf = new RandomAccessFile(file, "r");
-		this.mappedFile = raf.getChannel().map(MapMode.READ_ONLY, 0, file.length()).asIntBuffer();
+		this.fileBuffer = raf.getChannel().map(MapMode.READ_ONLY, 0, file.length());
+		this.intBuffer = fileBuffer.asIntBuffer();
 	}
 	
 	public BufferBitReader(IntBuffer mappedFile, BitListSize size) {
 		super(size);
-		this.mappedFile = mappedFile;
+		this.intBuffer = mappedFile;
 	}
 	
 	
 	@Override
 	public void reset() throws IOException {
-		mappedFile.position(0);
+		intBuffer.position(0);
 	}
 	
 	@Override
 	public void seek(long recordOffset) throws IOException {
 		long intOffset = recordOffset / recordsInBuffer;
-		mappedFile.position((int) intOffset);
-		buffer = mappedFile.get();
+		intBuffer.position((int) intOffset);
+		buffer = intBuffer.get();
 		bufferPos = recordSize * ((int) recordOffset % recordsInBuffer);
 	}
 	
 	@Override
 	public int read() throws IOException {
 		if (bufferPos == BUFFER_SIZE) {
-			buffer = mappedFile.get();
+			buffer = intBuffer.get();
 			bufferPos = 0;
 		}
 		
@@ -59,6 +62,10 @@ public class BufferBitReader extends AbstractBitReader {
 	
 	@Override
 	public void close() throws IOException {
+		if (fileBuffer != null) {
+			DirectBufferCleaner.cleanDirectBuffer(fileBuffer);
+		}
+		
 		if (raf != null) {
 			raf.close();
 		}

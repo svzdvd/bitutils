@@ -20,7 +20,7 @@ public class Buffer1BitReader extends BufferBitReader {
 	@Override
 	public int read() throws IOException {
 		if (bufferPos == BUFFER_SIZE) {
-			buffer = mappedFile.get();
+			buffer = intBuffer.get();
 			bufferPos = 0;
 		}
 		
