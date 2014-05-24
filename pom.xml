@@ -3,16 +3,18 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>it.yobibit</groupId>
   <artifactId>bitutils</artifactId>
-  <version>0.6-SNAPSHOT</version>
+  <version>0.6</version>
   <name>BitUtils</name>
   <url>https://github.com/svzdvd/bitutils/</url>
   <inceptionYear>2013</inceptionYear>
 
+      <!--maven variable which points to your local repository -->
+      <!-- 
 	<properties>
-	  <!--maven variable which points to your local repository -->
 	  <internal.repo.path>file:///home/davide/dev/mvn-repo/</internal.repo.path>
 	</properties>
-
+ -->
+ 
   <prerequisites>
 	<maven>2.2.1</maven>
   </prerequisites>
@@ -31,6 +33,19 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-source-plugin</artifactId>
+      <version>2.2.1</version>
+      <executions>
+        <execution>
+          <id>attach-sources</id>
+          <goals>
+            <goal>jar-no-fork</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>      
       <plugin>
         <artifactId>maven-deploy-plugin</artifactId>
         <version>2.7</version>
@@ -44,9 +59,18 @@
         <version>2.4</version>
       </plugin>            
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9</version>
-      </plugin>            
+        <version>2.9.1</version>
+        <executions>
+            <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                    <goal>jar</goal>
+                </goals>
+            </execution>
+        </executions>
+       </plugin>   
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>2.6</version>
@@ -124,11 +148,24 @@
   </reporting>
 
 	<distributionManagement>
+	  <snapshotRepository>
+	    <id>ossrh</id>
+	    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+	  </snapshotRepository>
+	  <repository>
+	    <id>ossrh</id>
+	    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+	  </repository>
+	</distributionManagement>
+
+<!-- 
+	<distributionManagement>
 	  <repository>
 	    <id>internal.repo</id>
 	    <name>Internal Repository</name>
 	    <url>${internal.repo.path}</url>
 	  </repository>
 	</distributionManagement>
-
+ -->
+ 
 </project>
