@@ -1,171 +1,185 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>it.yobibit</groupId>
-  <artifactId>bitutils</artifactId>
-  <version>0.7-SNAPSHOT</version>
-  <name>BitUtils</name>
-  <url>https://github.com/svzdvd/bitutils/</url>
-  <inceptionYear>2013</inceptionYear>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>it.yobibit</groupId>
+	<artifactId>bitutils</artifactId>
+	<version>0.7-SNAPSHOT</version>
+	<name>BitUtils</name>
+	<description>The BitUtils project provides bit packing utilities to serialize data in units of 1, 2 or 4 bits.</description>
+	<url>https://github.com/svzdvd/bitutils/</url>
+	<inceptionYear>2013</inceptionYear>
 
-      <!--maven variable which points to your local repository -->
-      <!-- 
-	<properties>
-	  <internal.repo.path>file:///home/davide/dev/mvn-repo/</internal.repo.path>
-	</properties>
- -->
- 
-  <prerequisites>
-	<maven>2.2.1</maven>
-  </prerequisites>
+	<issueManagement>
+		<url>https://github.com/svzdvd/bitutils/issues</url>
+	</issueManagement>
 
-  <scm>
-    <url>git@github.com:svzdvd/bitutils.git</url>
-  </scm>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
 
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-source-plugin</artifactId>
-      <version>2.2.1</version>
-      <executions>
-        <execution>
-          <id>attach-sources</id>
-          <goals>
-            <goal>jar-no-fork</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>      
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.7</version>
-      </plugin>            
-      <plugin>
-        <artifactId>maven-install-plugin</artifactId>
-        <version>2.4</version>
-      </plugin>            
-      <plugin>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>2.4</version>
-      </plugin>            
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9.1</version>
-        <executions>
-            <execution>
-                <id>attach-javadocs</id>
-                <goals>
-                    <goal>jar</goal>
-                </goals>
-            </execution>
-        </executions>
-       </plugin>   
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>2.6</version>
-      </plugin>            
-      <plugin>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.2</version>
-      </plugin>      
-      <plugin>
-        <artifactId>maven-clean-plugin</artifactId>
-        <version>2.5</version>
-      </plugin>
-	  <plugin>
-		<artifactId>maven-surefire-plugin</artifactId>
-        <version>2.14</version>
-	  </plugin>
-	  
-		<plugin>         
-		    <groupId>org.codehaus.mojo</groupId>         
-		    <artifactId>build-helper-maven-plugin</artifactId>         
-		    <version>1.7</version>         
-		    <executions>           
-		        <execution>             
-		            <id>remove-old-artifacts</id>             
-		            <phase>package</phase>             
-		            <goals>               
-		                <goal>remove-project-artifact</goal>             
-		            </goals>            
-		            <configuration>  
-		                <removeAll>true</removeAll><!-- When true, remove all built artifacts including all versions. When false, remove all built artifacts of this project version -->             
-		            </configuration>          
-		        </execution>         
-		    </executions>       
-		</plugin>	  
-	  
-    </plugins>
-  </build>
+	<prerequisites>
+		<maven>2.2.1</maven>
+	</prerequisites>
 
-  <developers>
-    <developer>
-      <id>svzdvd</id>
-      <name>Davide Savazzi</name>
-      <email>davide.savazzi [at] gmail.com</email>
-      <timezone>+1</timezone>
-      <roles>
-        <role>Developer</role>
-      </roles>
-    </developer>
-  </developers>
+	<scm>
+		<url>git@github.com:svzdvd/bitutils.git</url>
+	</scm>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.14</version>
+			</plugin>
 
-  <reporting>
-    <plugins>
-      <plugin>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.9</version>        
-            <configuration>
-            <groups>
-              <group>
-                <title>BitUtils</title>
-                <packages>it.yobibit.bitutils.*</packages>
-              </group>
-            </groups>
-            </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<id>remove-old-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>remove-project-artifact</goal>
+						</goals>
+						<configuration>
+							<removeAll>true</removeAll><!-- When true, remove all built artifacts 
+								including all versions. When false, remove all built artifacts of this project 
+								version -->
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<developers>
+		<developer>
+			<id>svzdvd</id>
+			<name>Davide Savazzi</name>
+			<email>davide.savazzi [at] gmail.com</email>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<groups>
+						<group>
+							<title>BitUtils</title>
+							<packages>it.yobibit.bitutils.*</packages>
+						</group>
+					</groups>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<distributionManagement>
-	  <snapshotRepository>
-	    <id>ossrh</id>
-	    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-	  </snapshotRepository>
-	  <repository>
-	    <id>ossrh</id>
-	    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-	  </repository>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
 	</distributionManagement>
 
-<!-- 
-	<distributionManagement>
-	  <repository>
-	    <id>internal.repo</id>
-	    <name>Internal Repository</name>
-	    <url>${internal.repo.path}</url>
-	  </repository>
-	</distributionManagement>
- -->
- 
 </project>
