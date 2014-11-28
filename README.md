@@ -67,3 +67,32 @@ try {
 ```
 
 ##### Serialize integer values from 0 to 15 (inclusive) using 4 bits for every value
+
+```java
+File dataFile = new File("numbers.bin");
+int[] values = new int[] { 12, 1, 13, 9, 7, 5, 8, 15, 3, 4 };
+
+// Writing
+BufferBitWriter writer = new BufferBitWriter(dataFile, BitListSize.Size4, values.length);
+try {
+  for (int i = 0; i < values.length; i++) {
+    writer.write(values[i]);
+  }
+} finally {
+  writer.close();
+}
+
+// Reading
+BufferBitReader reader = new BufferBitReader(dataFile, BitListSize.Size4);
+try {
+  
+  // Read next value
+  int value0 = reader.read();
+
+  // Read a value at the specified position
+  int value4 = reader.read(4);
+  
+} finally {
+  reader.close();
+}
+```
