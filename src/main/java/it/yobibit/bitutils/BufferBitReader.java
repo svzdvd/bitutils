@@ -47,6 +47,7 @@ public class BufferBitReader extends AbstractBitReader {
 	
 	@Override
 	public void reset() throws IOException {
+		super.reset();
 		intBuffer.position(0);
 	}
 	

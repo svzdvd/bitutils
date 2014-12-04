@@ -34,6 +34,7 @@ public class RandomAccessBitReader extends AbstractBitReader {
 	
 	@Override
 	public void reset() throws IOException {
+		super.reset();
 		raf.seek(0);
 	}
 	
