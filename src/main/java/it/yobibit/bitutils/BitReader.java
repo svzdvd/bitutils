@@ -20,12 +20,32 @@ import java.io.IOException;
 
 public interface BitReader extends Closeable {
 
+	/**
+	 * Sets the record-pointer offset at which the next read occurs.
+	 * @param recordOffset
+	 * @throws IOException
+	 */
 	void seek(long recordOffset) throws IOException;
 
+	/**
+	 * Reads a value.
+	 * @return deserialized value
+	 * @throws IOException
+	 */
 	int read() throws IOException;
 
+	/**
+	 * Reads a value at the given offset.
+	 * @param recordOffset
+	 * @return deserialized value
+	 * @throws IOException
+	 */
 	int read(long recordOffset) throws IOException;
 
+	/**
+	 * Returns at the beginning of the stream, sets the record-pointer at 0.
+	 * @throws IOException
+	 */
 	void reset() throws IOException;
 	
 }
