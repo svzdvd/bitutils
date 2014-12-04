@@ -96,3 +96,13 @@ try {
   reader.close();
 }
 ```
+
+#### Maven Configuration
+
+```xml
+<dependency>
+  <groupId>it.yobibit</groupId>
+  <artifactId>bitutils</artifactId>
+  <version>0.6</version>
+</dependency>
+```
