@@ -34,12 +34,12 @@ public class Buffer1BitReader extends BufferBitReader {
 	
 	@Override
 	public int read() throws IOException {
-		if (bufferPos == BUFFER_SIZE) {
+		if (intPos == BUFFER_SIZE) {
 			buffer = intBuffer.get();
-			bufferPos = 0;
+			intPos = 0;
 		}
 		
-		if (Bits.get(buffer, bufferPos++) == 0) {
+		if (Bits.get(buffer, intPos++) == 0) {
 			return 0;
 		} else {
 			return 1;

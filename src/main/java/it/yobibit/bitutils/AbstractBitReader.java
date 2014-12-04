@@ -24,7 +24,7 @@ public abstract class AbstractBitReader implements BitReader {
 	protected final int recordSize;
 	protected final int recordsInBuffer;
 	protected int buffer;
-	protected int bufferPos;
+	protected int intPos;
 	private int previousValue = -1;
 	private long previousRecordOffset = -1;	
 	protected static final int BUFFER_SIZE = Integer.SIZE;
@@ -35,19 +35,25 @@ public abstract class AbstractBitReader implements BitReader {
 		recordsInBuffer = BUFFER_SIZE / recordSize;
 
 		// reset (but don't call reset(): it's overridden by subclasses)
-		bufferPos = BUFFER_SIZE;
+		intPos = BUFFER_SIZE;
 		previousValue = -1;
 		previousRecordOffset = -1;	
 	}
 
 	
+	/**
+	 * @see it.yobibit.bitutils.BitReader#reset()
+	 */
 	@Override
 	public void reset() throws IOException {
-		bufferPos = BUFFER_SIZE;		
+		intPos = BUFFER_SIZE;		
 		previousValue = -1;
 		previousRecordOffset = -1;	
 	}
 
+	/**
+	 * @see it.yobibit.bitutils.BitReader#read(long)
+	 */
 	@Override
 	public int read(long recordOffset) throws IOException {
 		if (previousRecordOffset == recordOffset) {

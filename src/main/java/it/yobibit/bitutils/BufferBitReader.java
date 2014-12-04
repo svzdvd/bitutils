@@ -47,6 +47,7 @@ public class BufferBitReader extends AbstractBitReader {
 	
 	@Override
 	public void reset() throws IOException {
+		super.reset();
 		intBuffer.position(0);
 	}
 	
@@ -55,19 +56,19 @@ public class BufferBitReader extends AbstractBitReader {
 		long intOffset = recordOffset / recordsInBuffer;
 		intBuffer.position((int) intOffset);
 		buffer = intBuffer.get();
-		bufferPos = recordSize * ((int) recordOffset % recordsInBuffer);
+		intPos = recordSize * ((int) recordOffset % recordsInBuffer);
 	}
 	
 	@Override
 	public int read() throws IOException {
-		if (bufferPos == BUFFER_SIZE) {
+		if (intPos == BUFFER_SIZE) {
 			buffer = intBuffer.get();
-			bufferPos = 0;
+			intPos = 0;
 		}
 		
 		int value = 0;
 		for (int i = 0; i < recordSize; i++) {
-			if (Bits.get(buffer, bufferPos++) != 0) {
+			if (Bits.get(buffer, intPos++) != 0) {
 				value = Bits.set(value, i);
 			}
 		}

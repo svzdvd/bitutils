@@ -34,6 +34,7 @@ public class RandomAccessBitReader extends AbstractBitReader {
 	
 	@Override
 	public void reset() throws IOException {
+		super.reset();
 		raf.seek(0);
 	}
 	
@@ -43,19 +44,19 @@ public class RandomAccessBitReader extends AbstractBitReader {
 		long byteOffset = 4 * intOffset;
 		raf.seek(byteOffset);
 		buffer = raf.readInt();
-		bufferPos = recordSize * ((int) recordOffset % recordsInBuffer);
+		intPos = recordSize * ((int) recordOffset % recordsInBuffer);
 	}
 	
 	@Override
 	public int read() throws IOException {
-		if (bufferPos == BUFFER_SIZE) {
+		if (intPos == BUFFER_SIZE) {
 			buffer = raf.readInt();
-			bufferPos = 0;
+			intPos = 0;
 		}
 		
 		int value = 0;
 		for (int i = 0; i < recordSize; i++) {
-			if (Bits.get(buffer, bufferPos++) != 0) {
+			if (Bits.get(buffer, intPos++) != 0) {
 				value = Bits.set(value, i);
 			}
 		}
